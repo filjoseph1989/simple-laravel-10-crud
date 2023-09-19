@@ -1,0 +1,20 @@
+✔ Create a new Laravel project. @done(23-09-19 23:40)
+Create a database and migrate the Laravel tables.
+Create a User model and migration.
+☐ Create a Store model and migration.
+    ✔ Create a Store model and migration. @done(23-09-19 23:56)
+    ☐ address: The address of the store.
+    ☐ phone_number: The phone number of the store.
+    ☐ website: The website of the store.
+    ☐ social_media_links: Links to the store's social media pages.
+    ☐ status: The status of the store (e.g., active, inactive).
+
+✔ Create a UserController. @done(23-09-19 23:57)
+✔ Create a StoreController. @done(23-09-19 23:57)
+☐ Create views for user registration, login, logout, store creation, store editing, and store listing.
+☐ Implement user registration functionality.
+☐ Implement user login and logout mechanisms.
+☐ Enable users to create and manage multiple stores.
+☐ Incorporate pagination for the listing of stores.
+☐ Push your code to GitHub or another code repository platform.
+☐ Share the link to your code repository with the company.

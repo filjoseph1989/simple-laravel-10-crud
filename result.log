@@ -1,0 +1,16 @@
+\d stores
+                                          Table "public.stores"
+   Column    |              Type              | Collation | Nullable |              Default               
+-------------+--------------------------------+-----------+----------+------------------------------------
+ id          | bigint                         |           | not null | nextval('stores_id_seq'::regclass)
+ user_id     | bigint                         |           | not null | 
+ title       | character varying(255)         |           | not null | 
+ description | text                           |           | not null | 
+ image       | character varying(255)         |           |          | 
+ created_at  | timestamp(0) without time zone |           |          | 
+ updated_at  | timestamp(0) without time zone |           |          | 
+Indexes:
+    "stores_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "stores_user_id_foreign" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
