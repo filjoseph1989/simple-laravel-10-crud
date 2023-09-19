@@ -1,4 +1,0 @@
-::1 - - [19/Sep/2023:23:34:07 +0800] "GET / HTTP/1.1" 500 1088242 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.31"
-::1 - - [19/Sep/2023:23:34:09 +0800] "GET /favicon.ico HTTP/1.1" 200 296 "http://simple-laravel-app.test:8081/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.31"
-::1 - - [19/Sep/2023:23:35:38 +0800] "GET / HTTP/1.1" 500 1088298 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.31"
-::1 - - [19/Sep/2023:23:39:20 +0800] "GET / HTTP/1.1" 200 8284 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.31"
