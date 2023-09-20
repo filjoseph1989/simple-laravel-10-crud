@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class StoreController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieve logged-in user's stores, paginate, and chunk for view.
      */
     public function index()
     {
@@ -31,7 +31,7 @@ class StoreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Validate, create Store if valid, redirect with success on success.
      */
     public function store(Request $request)
     {
@@ -46,16 +46,20 @@ class StoreController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve and display the logged-in user's store by ID.
      */
     public function show(string $id)
     {
-        $store = Store::findOrFail($id);
+        $user = Auth::user();
+
+        // Find the store by ID that belongs to the logged-in user
+        $store = $user->stores()->findOrFail($id);
+
         return view('stores.show', compact('store'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Retrieve a store by ID and pass it to the 'stores.edit' view.
      */
     public function edit(string $id)
     {
@@ -64,7 +68,7 @@ class StoreController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update store based on validated request data and redirect with success.
      */
     public function update(Request $request, string $id)
     {
@@ -80,7 +84,7 @@ class StoreController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete store by ID and redirect to index with success message.
      */
     public function destroy(string $id)
     {
