@@ -11,7 +11,8 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCreateReturnsRegisterView()
+    /** @test */
+    public function create_returns_register_view()
     {
         // Visit the registration page
         $response = $this->get('/register');
@@ -23,7 +24,7 @@ class RegisterControllerTest extends TestCase
         $response->assertViewIs('register');
 
         // Optionally, you can assert the presence of specific elements in the view
-        $response->assertSee('Register'); 
+        $response->assertSee('Register');
         $response->assertSee('Name');
         $response->assertSee('Email');
         $response->assertSee('Password');

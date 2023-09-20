@@ -20,3 +20,4 @@ yarn-error.log
 /queries.sql
 /task.todo
 /access.log
+/result.log
