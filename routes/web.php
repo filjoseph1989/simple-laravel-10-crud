@@ -32,8 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'store']);
 
-    Route::get('/store', [StoreController::class, 'index']);
+    Route::get('/store', [StoreController::class, 'index'])->name('store.index');
     Route::get('/store/show', [StoreController::class, 'store']);
     Route::get('/store/list', [StoreController::class, 'list']);
     Route::get('/store/create', [StoreController::class, 'create']);
+    Route::delete('/store/delete/{id}', [StoreController::class, 'destroy'])->name('store.destroy');
 });

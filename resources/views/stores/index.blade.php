@@ -46,8 +46,13 @@
                                         class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Visit</button>
                                     <button type="button"
                                         class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                    <button type="button"
-                                        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                    <form action="{{ route('store.destroy', $store->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded delete-btn">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -78,6 +83,21 @@
             <li><span class="bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded cursor-not-allowed">Next</span></li>
         @endif
     </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to delete this store?')) {
+                        // Submit the form when confirmed
+                        button.closest('form').submit();
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
