@@ -12,13 +12,15 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = Store::all();
-        $stores = $stores->chunk(3);
-        return view('stores.index', compact('stores'));
+        $perPage = 9;
+        $stores = Store::paginate($perPage);
+        $storeChunks = $stores->chunk(3);
+        return view('stores.index', compact('stores', 'storeChunks'));
     }
 
     /**
      * Show the form for creating a new resource.
+     * TODO complete this
      */
     public function create()
     {

@@ -21,36 +21,63 @@
         4. When mouse click on the owner name, visit owners profile
 
         --}}
-    <h1 class="text-base font-bold mx-4 mt-4" style=" font-size: x-large;">Stores</h1>
+    <div class="flex flex-row justify-center my-10">
+        <h1 class="text-base font-bold mx-4 mt-4" style=" font-size: x-large;">Stores</h1>
+    </div>
 
-    @foreach ($stores as $storeChunks)
-        <div class="mx-2 my-2">
-            <div class="flex columns-3">
-                @foreach ($storeChunks as $store)
-                    <div class="border mx-2 my-4 p-4 rounded-md">
-                        <div class="bg-white rounded-lg shadow-lg">
-                            <div class="p-4">
-                                <img src="{{ $store->image }}" alt="Store image" class="w-full h-32">
-                                <h2 class="text-xl font-bold mb-4">
-                                    <a href="http://">{{ $store->title }}</a>
-                                </h2>
-                                <i><a href="http://{{ $store->user_id }}">Owner</a> | {{ $store->created_at->format("M d, Y") }}</i>
-                                
-                                <p>{{ implode(' ', array_slice(explode(' ', $store->description), 0, 10)) }}</p>
+    @foreach ($storeChunks as $chunks)
+        <div class="flex flex-row justify-center">
+            <div class="mx-2">
+                <div class="flex columns-3">
+                    @foreach ($chunks as $store)
+                        <div class="mx-2 my-4 rounded-md border">
+                            <div class="bg-white rounded-lg shadow-lg">
+                                <div class="p-4">
+                                    <img src="{{ $store->image }}" alt="Store image" class="w-full h-32">
+                                    <h2 class="text-xl font-bold mb-4">
+                                        <a href="http://">{{ $store->title }}</a>
+                                    </h2>
+                                    <i><a href="http://{{ $store->user_id }}">Owner</a> | {{ $store->created_at->format("M d, Y") }}</i>
 
-                                {{-- TODO - --}}
-                                <button type="button"
-                                    class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Visit</button>
-                                <button type="button"
-                                    class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                <button type="button"
-                                    class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                    <p>{{ implode(' ', array_slice(explode(' ', $store->description), 0, 10)) }}</p>
+
+                                    {{-- TODO - --}}
+                                    <button type="button"
+                                        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Visit</button>
+                                    <button type="button"
+                                        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                                    <button type="button"
+                                        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     @endforeach
+
+    <ul class="flex flex-row justify-center space-x-2 my-10">
+        @if ($stores->onFirstPage())
+            <li><span class="bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded cursor-not-allowed">Previous</span></li>
+        @else
+            <li><a href="{{ $stores->previousPageUrl() }}" class="bg-white hover:bg-gray-100 text-gray-600 font-bold py-2 px-4 rounded">Previous</a></li>
+        @endif
+
+        @foreach ($stores->links()->elements[0] as $page => $url)
+            @if ($page == $stores->currentPage())
+                <li><span class="bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded">{{ $page }}</span></li>
+            @else
+                <li><a href="{{ $url }}" class="bg-white hover:bg-gray-100 text-gray-600 font-bold py-2 px-4 rounded">{{ $page }}</a></li>
+            @endif
+        @endforeach
+
+        @if ($stores->hasMorePages())
+            <li><a href="{{ $stores->nextPageUrl() }}" class="bg-white hover:bg-gray-100 text-gray-600 font-bold py-2 px-4 rounded">Next</a></li>
+        @else
+            <li><span class="bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded cursor-not-allowed">Next</span></li>
+        @endif
+    </ul>
+
 </body>
 </html>
