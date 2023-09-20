@@ -72,15 +72,28 @@ class StoreController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+        // Validate the form data, including the uploaded image
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $store = Store::findOrFail($id);
-        $store->update($validatedData);
 
-        return redirect()->route('stores.index')->with('success', 'Store updated successfully.');
+        $store->title = $request->input('title');
+        $store->description = $request->input('description');
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images', $imageName);
+            $store->image = $imageName;
+        }
+
+        $store->save();
+
+        return redirect()->route('stores.show', ['id' => $store->id])->with('success', 'Store updated successfully.');
     }
 
     /**

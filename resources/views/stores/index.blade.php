@@ -40,8 +40,7 @@
                                     {{-- TODO - --}}
                                     <button type="button"
                                         class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Visit</button>
-                                    <button type="button"
-                                        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                                    <a href="{{ route('stores.edit', ['id' => $store->id]) }}" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
                                     <form action="{{ route('store.destroy', $store->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

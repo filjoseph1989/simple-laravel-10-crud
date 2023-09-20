@@ -35,5 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/store', [StoreController::class, 'index'])->name('store.index');
     Route::get('/store/create', [StoreController::class, 'create'])->name('store.create');
     Route::get('/store/show/{id}', [StoreController::class, 'show'])->name('store.show');
+    Route::get('/store/{id}/edit', [StoreController::class, 'edit'])->name('store.edit');
     Route::delete('/store/delete/{id}', [StoreController::class, 'destroy'])->name('store.destroy');
+    Route::put('/store/update/{id}', [StoreController::class, 'update'])->name('store.update');
 });
