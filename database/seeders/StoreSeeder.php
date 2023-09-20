@@ -11,6 +11,7 @@ class StoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * php artisan db:seed --class=StoreSeeder
      */
     public function run(Faker $faker): void
     {

@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stores</title>
-    @vite([
-        'resources/css/app.css',
-        'resources/js/app.js'
-    ])
-</head>
-<body>
-    {{--
+@extends('master')
+
+@section('title', 'List of Stores')
+
+@section('styles')
+@endsection
+
+@section('content')
+        {{--
         TODO
         1. find an actual image or generate one
         2. the links must be correct and has there own routes
@@ -83,7 +79,9 @@
             <li><span class="bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded cursor-not-allowed">Next</span></li>
         @endif
     </ul>
+@endsection
 
+@section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const deleteButtons = document.querySelectorAll('.delete-btn');
@@ -98,6 +96,4 @@
             });
         });
     </script>
-
-</body>
-</html>
+@endsection
