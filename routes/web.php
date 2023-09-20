@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +21,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', [RegisterController::class, 'show']);
-Route::get('/login', [LoginController::class, 'show']);
+Route::get('/register', [RegisterController::class, 'show'])->name('register');
+Route::get('/login', [LoginController::class, 'show'])->name('login');
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
-    // Authenticated routes go here
+    Route::post('/logout', [UserController::class, 'logout']);
+
+    Route::get('/dashboard', [DashboardController::class, 'store']);
+
+    Route::get('/store', [StoreController::class, 'index']);
+    Route::get('/store/show', [StoreController::class, 'store']);
+    Route::get('/store/list', [StoreController::class, 'list']);
+    Route::get('/store/create', [StoreController::class, 'create']);
 });

@@ -13,6 +13,7 @@ class StoreController extends Controller
     public function index()
     {
         $stores = Store::all();
+        $stores = $stores->chunk(3);
         return view('stores.index', compact('stores'));
     }
 
