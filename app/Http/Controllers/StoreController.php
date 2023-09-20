@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Store;
+use Auth;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -12,8 +13,10 @@ class StoreController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
         $perPage = 9;
-        $stores = Store::paginate($perPage);
+        $stores = Store::where('user_id', $user->id)->paginate($perPage);
         $storeChunks = $stores->chunk(3);
         return view('stores.index', compact('stores', 'storeChunks'));
     }
