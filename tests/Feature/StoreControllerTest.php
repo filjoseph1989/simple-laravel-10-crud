@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Store;
 use App\Models\User;
+use App\Models\UserStore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -107,5 +108,60 @@ class StoreControllerTest extends TestCase
 
         // Assert that the store was not created in the database
         $this->assertDatabaseCount('stores', 0);
+    }
+
+    /** @test */
+    public function show_displays_store_for_authenticated_user()
+    {
+        // Create a store associated with the user
+        $store = Store::factory()->create(['user_id' => $this->user->id]);
+
+        UserStore::create([
+            'user_id' => $this->user->id,
+            'store_id' => $store->id,
+        ]);
+
+        // Make a GET request to the store show route
+        $response = $this->actingAs($this->user)->get(route('store.show', ['id' => $store->id]));
+
+        // Assert that the response status code is 200 (OK)
+        $response->assertStatus(200);
+
+        // Assert that the response contains the store details
+        $response->assertSee($store->title);
+        $response->assertSee($store->description);
+    }
+
+    /** @test */
+    public function show_redirects_guest_users_to_index()
+    {
+        // Create a store
+        $store = Store::factory()->create();
+
+        // Make a GET request to the store show route as a guest user
+        $response = $this->get(route('store.show', ['id' => $store->id]));
+
+        // Assert that guest users are redirected to the index route
+        $response->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function show_redirects_authenticated_users_to_index_for_non_owned_store()
+    {
+        // Create two users
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        // Authenticate the first user
+        $this->actingAs($user1);
+
+        // Create a store associated with the second user
+        $store = Store::factory()->create(['user_id' => $user2->id]);
+
+        // Make a GET request to the store show route for a non-owned store
+        $response = $this->get(route('store.show', ['id' => $store->id]));
+
+        // Assert that authenticated users are redirected to the index route for non-owned stores
+        $response->assertRedirect(route('store.index'));
     }
 }
