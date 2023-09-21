@@ -51,7 +51,7 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         }
 
         // Todo - solve the issue encountered 'page expire' when user enter wrong credentials

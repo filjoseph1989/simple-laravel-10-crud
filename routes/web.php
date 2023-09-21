@@ -22,15 +22,12 @@ Route::get('/', function () {
 });
 
 Route::get('/register', [RegisterController::class, 'show'])->name('register');
-Route::get('/login', [LoginController::class, 'show'])->name('login');
-
 Route::post('/register', [UserController::class, 'register']);
+Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('/logout', [UserController::class, 'logout']);
-
-    Route::get('/dashboard', [DashboardController::class, 'store']);
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
     Route::get('/store', [StoreController::class, 'index'])->name('store.index');
     Route::get('/store/create', [StoreController::class, 'create'])->name('store.create');
