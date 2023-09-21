@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Store;
 use Auth;
+use App\Models\Store;
+use App\Models\UserStore;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -52,10 +53,17 @@ class StoreController extends Controller
     {
         $user = Auth::user();
 
-        // Find the store by ID that belongs to the logged-in user
-        $store = $user->stores()->findOrFail($id);
+        $store = UserStore::where('user_id', $user->id)
+            ->where('store_id', $id)
+            ->with('store')
+            ->first();
 
-        return view('stores.show', compact('store'));
+        if ($store) {
+            $store = $store->store;
+            return view('stores.show', compact('store'));
+        }
+
+        return redirect()->route('store.index');
     }
 
     /**
