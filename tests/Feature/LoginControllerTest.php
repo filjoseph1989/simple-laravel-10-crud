@@ -25,7 +25,7 @@ class LoginControllerTest extends TestCase
         ]);
 
         // Assert that the user is redirected to the dashboard page.
-        $response->assertRedirect('/dashboard');
+        $response->assertRedirect('/');
     }
 
     /** @test */

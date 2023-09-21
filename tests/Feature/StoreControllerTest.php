@@ -46,9 +46,8 @@ class StoreControllerTest extends TestCase
     /** @test */
     public function index_redirects_guest_users_to_login()
     {
-        $response = $this->actingAs($this->user)->get(route('store.index'));
-
-        // Assert that guest users are redirected to the login page
+        $response = $this->get(route('store.index'));
+        $response->assertStatus(302);
         $response->assertRedirect(route('login'));
     }
 

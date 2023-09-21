@@ -16,8 +16,10 @@ class RegistrationTest extends TestCase
     /** @test */
     public function a_user_can_register()
     {
-        $response = $this->post('/register', [
+        $response = $this->post(route('register'), [
             'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -36,6 +38,8 @@ class RegistrationTest extends TestCase
     {
         User::create([
             'name' => 'Existing User',
+            'first_name' => 'Existing',
+            'last_name' => 'User',
             'email' => 'existing@example.com',
             'password' => Hash::make('password'),
         ]);
