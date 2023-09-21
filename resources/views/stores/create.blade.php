@@ -11,21 +11,21 @@
     </div>
 
     <div class="flex flex-row justify-center">
-        <div class="bg-zinc-800 flex justify-center w-1/2">
-            <div class="w-full p-4">
+        <div class="rounded-lg shadow-lg w-1/2">
+            <div class="w-full p-4 ">
                 <form action="{{ route('store.store') }}" method="post">
                     @csrf
                     <div class="flex flex-col space-y-4">
                         <div class="flex flex-row items-center">
-                            <label for="title" class="text-white mr-2 capitalize">title</label>
+                            <label for="title" class="mr-2 capitalize">title</label>
                             <input type="text" name="title" placeholder="new store name" class="w-full border rounded p-2">
                         </div>
                         <div class="flex flex-row items-center">
-                            <label for="description" class="text-white mr-2 capitalize">description</label>
+                            <label for="description" class="mr-2 capitalize">description</label>
                             <input type="text" name="description" placeholder="new store description" class="w-full border rounded p-2">
                         </div>
                         <div class="flex flex-row items-center">
-                            <label for="image" class="text-white mr-2 capitalize">Upload Image</label>
+                            <label for="image" class="mr-2 capitalize">Upload Image</label>
                             <input type="file" name="image" id="image" accept="image/*" class="w-full border rounded p-2">
                         </div>
                         <button type="submit"

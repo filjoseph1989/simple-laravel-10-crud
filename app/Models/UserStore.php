@@ -10,6 +10,11 @@ class UserStore extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'store_id',
+    ];
+
     /**
      * Define a 'belongsTo' relationship between Appointment and User models.
      */

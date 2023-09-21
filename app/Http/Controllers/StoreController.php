@@ -46,7 +46,11 @@ class StoreController extends Controller
 
         try {
             $validatedData['user_id'] = $user->id;
-            Store::create($validatedData);
+            $store = Store::create($validatedData);
+            UserStore::create([
+                'user_id' => $user->id,
+                'store_id' => $store->id,
+            ]);
             return redirect()->route('store.index')->with('success', 'Store created successfully.');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
