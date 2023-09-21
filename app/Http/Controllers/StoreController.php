@@ -113,7 +113,7 @@ class StoreController extends Controller
 
         $store->save();
 
-        return redirect()->route('stores.show', ['id' => $store->id])->with('success', 'Store updated successfully.');
+        return redirect()->route('store.show', ['id' => $store->id])->with('success', 'Store updated successfully.');
     }
 
     /**
