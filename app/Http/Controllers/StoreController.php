@@ -92,28 +92,36 @@ class StoreController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validate the form data, including the uploaded image
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $store = Store::findOrFail($id);
+        try {
+            $store = Store::findOrFail($id);
 
-        $store->title = $request->input('title');
-        $store->description = $request->input('description');
+            $store->title = $request->input('title');
+            $store->description = $request->input('description');
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName);
-            $store->image = $imageName;
+            if ($request->hasFile('image')) {
+                // Doing this to allow optional upload of the image
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                ]);
+
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->storeAs('public/images', $imageName);
+                $store->image = $imageName;
+            }
+
+            $store->save();
+
+            return redirect()->route('store.show', ['id' => $store->id])->with('success', 'Store updated successfully.');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return back()->withError('An error occurred.');
         }
-
-        $store->save();
-
-        return redirect()->route('store.show', ['id' => $store->id])->with('success', 'Store updated successfully.');
     }
 
     /**
@@ -121,9 +129,13 @@ class StoreController extends Controller
      */
     public function destroy(string $id)
     {
-        $store = Store::findOrFail($id);
-        $store->delete();
-
-        return redirect()->route('store.index')->with('success', 'Store deleted successfully.');
+        try {
+            $store = Store::findOrFail($id);
+            $store->delete();
+            return redirect()->route('store.index')->with('success', 'Store deleted successfully.');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return back()->withError('An error occurred.');
+        }
     }
 }
