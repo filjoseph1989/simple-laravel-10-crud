@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    @vite([
-        'resources/css/app.css',
-        'resources/js/app.js'
-    ])
-</head>
-<body>
-    <h1 class="text-base font-bold" style=" font-size: x-large; margin: 40px 50px;">Create Store Form</h1>
-    <div style="margin: 0 50px;">
+@extends('master')
+
+@section('title', 'Create New Store')
+
+@section('styles')
+@endsection
+
+@section('content')
+    <h1 class="text-base font-bold mb-10" style=" font-size: x-large;">Create Store </h1>
+
+    <div class="bg-white">
         <form action="/login" method="post">
             @csrf
 
@@ -28,5 +25,7 @@
             </div>
         </form>
     </div>
-</body>
-</html>
+@endsection
+
+@section('scripts')
+@endsection
