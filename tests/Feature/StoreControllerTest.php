@@ -63,4 +63,49 @@ class StoreControllerTest extends TestCase
         // Assert that the response contains the create store form view
         $response->assertViewIs('stores.create');
     }
+
+    /** @test */
+    public function store_creates_store_and_redirects_to_index_on_success()
+    {
+        $this->actingAs($this->user);
+
+        // Simulate valid form data
+        $formData = [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+        ];
+
+        // Make a POST request to the store route
+        $response = $this->actingAs($this->user)->post(route('store.store'), $formData);
+
+        // Assert that the response redirects to the index route
+        $response->assertRedirect(route('store.index'));
+
+        // Assert that the store was created in the database
+        $this->assertDatabaseHas('stores', $formData);
+
+        // Assert that a success message is flashed to the session
+        $response->assertSessionHas('success', 'Store created successfully.');
+    }
+
+    /** @test */
+    public function store_handles_validation_errors()
+    {
+        // Simulate invalid form data (missing required fields)
+        $invalidData = [];
+
+        // Make a POST request to the store route
+        $response = $this->actingAs($this->user)->post(route('store.store'), $invalidData);
+
+        $response->assertRedirect()->assertSessionHasErrors([
+            'title' => 'The title field is required.',
+            'description' => 'The description field is required.',
+        ]);
+
+        // Assert that validation errors are flashed to the session
+        $response->assertSessionHasErrors(['title', 'description']);
+
+        // Assert that the store was not created in the database
+        $this->assertDatabaseCount('stores', 0);
+    }
 }
