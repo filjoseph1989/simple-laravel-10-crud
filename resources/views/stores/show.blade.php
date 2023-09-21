@@ -38,6 +38,9 @@
                     </i>
 
                     <div class="flex">
+                        <a href="{{ route('store.create') }}">
+                            <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded delete-btn mr-1">New</button>
+                        </a>
                         <a href="{{ route('store.edit', ['id' => $store->id]) }}">
                             <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded delete-btn mr-1">Edit</button>
                         </a>

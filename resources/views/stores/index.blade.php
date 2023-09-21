@@ -23,7 +23,8 @@
     </div>
 
     <div class="flex flex-row mx-4">
-        <a href="/store/create" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Create Store</a>
+        <a href="{{ route('store.create') }}"
+            class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Create Store</a>
     </div>
 
     @foreach ($storeChunks as $chunks)
@@ -31,7 +32,15 @@
             <div class="mx-2">
                 <div class="flex columns-3">
                     @foreach ($chunks as $store)
-                        <div class="mx-2 my-4 rounded-md w-1/3 ">
+                        @php
+                            $chunkCount = $chunks->count();
+                            if ($chunkCount > 1) {
+                                $width = "w-1/$chunkCount";
+                            } else {
+                                $width = "";
+                            }
+                        @endphp
+                        <div class="mx-2 my-4 rounded-md {{ $width }}">
                             <div class="scale-100 p-6 bg-white dark:bg-gray-900 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                                 <div>
                                     <a href="{{ route('store.show', ['id' => $store->id]) }}" class="flex">

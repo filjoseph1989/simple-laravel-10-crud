@@ -6,6 +6,7 @@ use Auth;
 use App\Models\Store;
 use App\Models\UserStore;
 use Illuminate\Http\Request;
+use Log;
 
 class StoreController extends Controller
 {
@@ -24,7 +25,6 @@ class StoreController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * TODO complete this
      */
     public function create()
     {
@@ -36,14 +36,22 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            // Todo - file validation goes here
         ]);
 
-        $store = Store::create($validatedData);
-
-        return redirect()->route('stores.index')->with('success', 'Store created successfully.');
+        try {
+            $validatedData['user_id'] = $user->id;
+            Store::create($validatedData);
+            return redirect()->route('store.index')->with('success', 'Store created successfully.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->withError('An error occurred while saving the store.');
+        }
     }
 
     /**

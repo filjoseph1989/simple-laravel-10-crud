@@ -9,6 +9,8 @@ class Store extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id','title', 'description']; // Todo - include image
+
     /**
      * Define a one-to-one relationship with User.
      */
